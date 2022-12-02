@@ -13,7 +13,6 @@ const Movies = ({ movie }) => {
         <Link
           to={`/movie/${movie.imdbID}`}
           className={classes.detailsbtn}
-          target="_blank"
         >
           More Details
         </Link>
