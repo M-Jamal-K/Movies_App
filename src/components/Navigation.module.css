@@ -1,0 +1,27 @@
+.navigation {
+  background-color: rgba(0, 0, 0, 0.562);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+}
+.logo img {
+  margin-right: 100px;
+}
+.navText > a {
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 80px;
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+}
+@media only screen and (max-width: 500px) {
+  .navText > a {
+    /* margin-left: 5px; */
+    text-align: center;
+  }
+  .logo img {
+    display: none;
+  }
+}

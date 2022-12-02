@@ -1,0 +1,24 @@
+.movieimg {
+  width: 90%;
+  text-align: center;
+}
+.title {
+  color: white;
+  flex-grow: 1;
+  width: 89%;
+  text-align: center;
+}
+.year {
+  text-align: left;
+  color: white;
+}
+.detailsbtn {
+  color: white;
+  text-decoration: none;
+  background-color: rgb(16, 137, 212);
+  padding: 5px 30px;
+  border-radius: 5px;
+}
+.mrgnUp {
+  margin-top: 10px;
+}

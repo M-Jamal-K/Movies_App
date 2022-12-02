@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  width: 80%;
+  margin: 10px auto;
+  justify-content: center;
+  flex-direction: column;
+  background-color: rgb(22, 26, 31);
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+  margin-bottom: 50px;
+}
+.plot > h1,
+.plot > p {
+  line-height: 25px;
+  padding: 8px 0px;
+}
+.backLink,
+.btns {
+  color: white;
+  margin-right: 10px;
+  text-decoration: none;
+}
+.btns {
+  background-color: rgb(16, 137, 212);
+  padding: 8px;
+  border-radius: 5px;
+}
+.links {
+  margin-top: 20px;
+}
