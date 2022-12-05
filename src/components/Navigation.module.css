@@ -17,8 +17,12 @@
   text-decoration: none;
 }
 @media only screen and (max-width: 500px) {
+  .navigation {
+    justify-content: center;
+  }
   .navText > a {
-    /* margin-left: 5px; */
+    margin-left: 0px;
+
     text-align: center;
   }
   .logo img {
