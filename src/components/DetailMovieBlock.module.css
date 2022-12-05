@@ -34,4 +34,7 @@ li > strong {
     flex-direction: column;
     align-items: center;
   }
+  .movieInfo {
+    width: 100%;
+  }
 }
