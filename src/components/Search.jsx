@@ -1,6 +1,6 @@
 import classes from "./Search.module.css";
 import { BiSearchAlt } from "react-icons/bi";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Movies from "./Movies";
 import loadingAnim from "../Assets/Spinner-1s-200px.gif";
 const Search = () => {
@@ -9,12 +9,19 @@ const Search = () => {
   let msg;
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (window.Cache.length) setmoviesData(window.Cache);
+    return () => {};
+  }, []);
+
   const submitHanlder = async (e) => {
+    window.Cache = [];
+    setmoviesData([]);
     e.preventDefault();
     const enterenValue = search.current.value.trim();
     if (enterenValue !== "") {
       setIsPending(true);
-      setmoviesData([]);
       try {
         const res = await fetch(
           `https://www.omdbapi.com/?apikey=ea9cad3&s=${enterenValue}`
@@ -25,6 +32,7 @@ const Search = () => {
         const data = await res.json();
         if (data.Search) {
           setmoviesData(data.Search);
+          window.Cache = data.Search;
         }
         setIsPending(false);
         setError(null);
@@ -42,7 +50,6 @@ const Search = () => {
   if (isPending) {
     msg = "Loading Please Wait!! :) ";
   }
-  console.log(error);
   return (
     <div className={classes.container}>
       {!isPending && !error && (
