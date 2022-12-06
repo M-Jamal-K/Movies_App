@@ -1,11 +1,11 @@
 import Navigation from "./Navigation";
 import Search from "./Search";
 
-const Home = () => {
+const Home = ({ cache }) => {
   return (
     <>
       <Navigation />
-      <Search />
+      <Search cache={cache} />
     </>
   );
 };

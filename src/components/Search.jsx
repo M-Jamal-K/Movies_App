@@ -3,45 +3,63 @@ import { BiSearchAlt } from "react-icons/bi";
 import { useRef, useState, useEffect } from "react";
 import Movies from "./Movies";
 import loadingAnim from "../Assets/Spinner-1s-200px.gif";
-const Search = () => {
+import { useSearchParams } from "react-router-dom";
+
+const Search = ({ cache }) => {
   const search = useRef(null);
   const [moviesData, setmoviesData] = useState([]);
   let msg;
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
+  const [params, setParams] = useSearchParams();
+  const query = params.get("q");
 
   useEffect(() => {
-    if (window.Cache.length) setmoviesData(window.Cache);
+    
+    
+    if (query && query.trim().length > 1) {
+      submitHanlder(null);
+    }
+    // if (window.Cache.length) setmoviesData(window.Cache);
     return () => {};
   }, []);
 
   const submitHanlder = async (e) => {
-    window.Cache = [];
     setmoviesData([]);
-    e.preventDefault();
-    const enterenValue = search.current.value.trim();
-    if (enterenValue !== "") {
-      setIsPending(true);
-      try {
-        const res = await fetch(
-          `https://www.omdbapi.com/?apikey=ea9cad3&s=${enterenValue}`
-        );
-        if (!res.ok) {
-          throw Error("could not fetch the data");
-        }
-        const data = await res.json();
-        if (data.Search) {
-          setmoviesData(data.Search);
-          window.Cache = data.Search;
-        }
-        setIsPending(false);
-        setError(null);
-      } catch (err) {
-        setIsPending(false);
-        setError(err.message);
+    e && e.preventDefault();
+    const enteredValue = search.current.value.trim();
+    setParams({ q: enteredValue });
+
+    if (enteredValue === "")
+      return alert("Please Input Something In Search Field");
+
+    setIsPending(true);
+    
+    const cacheItem = cache.get(enteredValue);
+    if(cacheItem) {
+      setIsPending(false);
+      setError(null);
+      setmoviesData(cacheItem);
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `https://www.omdbapi.com/?apikey=ea9cad3&s=${enteredValue}`
+      );
+      if (!res.ok) {
+        throw Error("could not fetch the data");
       }
-    } else {
-      alert("Please Input Something In Search Field");
+      const data = await res.json();
+      if (data.Search) {
+        setmoviesData(data.Search);
+        cache.add(enteredValue, data.Search)
+      }
+      setIsPending(false);
+      setError(null);
+    } catch (err) {
+      setIsPending(false);
+      setError(err.message);
     }
   };
   if (!moviesData.length) {
@@ -63,6 +81,7 @@ const Search = () => {
               ref={search}
               type="text"
               placeholder="Search Movies, TV series"
+              defaultValue={query || ""}
             />
             <button className={classes.submit} type="submit">
               Search
