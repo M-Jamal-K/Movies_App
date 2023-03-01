@@ -1,7 +1,10 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import classes from "./About.module.css";
 
 const About = ({ plot, id }) => {
+
+  const { search } = useLocation();
+
   return (
     <>
       <div className={classes.container}>
@@ -18,7 +21,7 @@ const About = ({ plot, id }) => {
           >
             View on IMDB
           </a>
-          <Link className={classes.backLink} to="/">
+          <Link className={classes.backLink} to={`/${search}`}>
             Go Back To Search
           </Link>
         </div>
